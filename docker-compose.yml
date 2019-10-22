@@ -1,0 +1,48 @@
+version: '3'
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    container_name: mongo9
+    network_mode: host
+  muzixapp:
+    image: trackservice
+    build: muzix/
+    restart: always
+    container_name: trackservice9
+    network_mode: host
+    ports:
+      - "8090:8090"
+    expose:
+      - 8090
+  configservice:
+    image: configservice
+    build: config-server-application/
+    restart: always
+    container_name: configservice9
+    network_mode: host
+    ports:
+      - "8082:8082"
+    expose:
+      - 8082
+  zuul:
+    image: zuul
+    build: zuulservice/
+    restart: always
+    container_name: zuulservice9
+    network_mode: host
+    ports:
+      - "8081:8081"
+    expose:
+      - 8081
+  eureka:
+    image: eurekaserver
+    build: eureka-server-app/
+    restart: always
+    container_name: eurekaservice9
+    network_mode: host
+    ports:
+      - "8083:8083"
+    expose:
+      - 8083
